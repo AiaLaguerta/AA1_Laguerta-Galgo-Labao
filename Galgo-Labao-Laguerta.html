@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AA1-Laguerta_Galgo_Labao</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        th, td {
+            background-color: #f2f2f2;
+        }
+        body{
+            background-image: url('you are my sunshine.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;  
+            background-size: 100% 100%;
+        }
+        .title{
+            font-family: 'Segoe UI';
+            font-weight: bold;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+        button{
+            color: rgb(32, 73, 75);
+            text-decoration: none;
+            display: inline-block;
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid aliceblue;
+            cursor: pointer;
+        }
+        
+        button:hover{
+            background-color: rgb(93, 84, 141);
+            color: rgb(228, 226, 115);
+        }
+
+        .button1{
+            margin-left: 400px;
+        }
+
+        footer{
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: small;
+            color: white;
+        }
+
+
+    </style>
+</head>
+<body>
+<h1 class="title">Simple Supplies Inventory System Version 1</h1>
+
+<button id="addButton" class="button1" onclick="addItem(prompt('Enter the item name hehe :3!'), parseInt(prompt('Enter the no. of items bbg')))">Add Item</button>
+<button id="addNoOfButton" onclick="addNoOfItem(prompt('Enter the item name hehe :3!'), prompt('How many you wanna add brotha?'))">Add No of Items</button>
+<button id="subNoOfButton" onclick="subNoOfItem(prompt('Enter the item name hehe :3!'), parseInt(prompt('How many you want to steal brotha?')))">Sub No of Items</button>
+<button id="removeButton" onclick="removeItem(prompt('What you wanna remove cuhh?'))">Remove Item</button>
+
+<div id="inventory"></div>
+
+<script>
+    // Initializing the supply array
+    var supply = [];
+
+    // Function to add a new item to the inventory
+    function addItem(name, num) {
+        // Check if the item already exists in the inventory
+        var exists = supply.some(function(item) {
+            return item.itemName === name;
+        });
+
+        if (exists) {
+            alert('Item already exists! Enter another one bro 😠');
+        } else if (num > 0 && num !== null) {
+            supply.push({ itemName: name, noOfItem: num });
+        } else {
+            alert('You cannot have that number. Enter another one 😃');
+        }
+
+        displayItems();
+    }
+
+    // Function to add the number of items in the inventory
+    function addNoOfItem(name, num) {
+        var itemGetIndex = supply.findIndex(function(item) {
+            return item.itemName === name;
+        });
+
+        if (itemGetIndex !== -1) {
+            supply[itemGetIndex].noOfItem += parseInt(num);
+        } else {
+            alert("Can't add supply to nothing bruh");
+        }
+
+        displayItems();
+    }
+
+    // Function to subtract the number of items in the inventory
+    function subNoOfItem(name, num) {
+        var itemGetIndex = supply.findIndex(function(item) {
+            return item.itemName === name;
+        });
+
+        if (itemGetIndex !== -1) {
+            if (supply[itemGetIndex].noOfItem >= num) {
+                supply[itemGetIndex].noOfItem -= parseInt(num);
+            }
+            else{
+                supply[itemGetIndex].noOfItem = 0;
+            }
+        } else {
+            alert("We don't have that item blud");
+        }
+
+        displayItems();
+    }
+
+    // Function to remove an item from the inventory
+    function removeItem(name) {
+        var indexToRemove = supply.findIndex(function(item) {
+            return item.itemName === name;
+        });
+
+        if (indexToRemove !== -1) {
+            supply.splice(indexToRemove, 1);
+        }
+
+        displayItems();
+    }
+
+    // Function to display all items in the inventory
+    function displayItems() {
+        var table = "<table>";
+        table += "<tr>";
+        table += "<th>Item Name</th>";
+        table += "<th>No of Items</th>";
+        table += "</tr>";
+
+        for (var i = 0; i < supply.length; i++) {
+            table += "<tr>";
+            table += "<td>" + supply[i].itemName + "</td>";
+            table += "<td>" + supply[i].noOfItem + "</td>";
+            table += "</tr>";
+        }
+
+        table += "</table>";
+        document.getElementById("inventory").innerHTML = table;
+    }
+
+    // Initialize the inventory display
+    displayItems();
+</script>
+
+</article>
+
+<footer>
+
+    <p>Coded by: Laguerta, Galgo, Labao of 9-Potassium</p>
+
+</footer>
+
+</body>
+</html>
